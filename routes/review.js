@@ -6,7 +6,7 @@ const {validateReview, isLoggedIn,isReviewAuthor} = require("../middleware.js");
 
 
 const Listing = require("../models/listing.js")
-const reviewCnotroller = require("../controllers/reviews.js")
+const reviewController = require("../controllers/reviews.js")
 
 
 
