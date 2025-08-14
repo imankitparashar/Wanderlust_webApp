@@ -1,0 +1,221 @@
+<% layout("/layouts/boilerplate")%>
+<style>
+    #filters{
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        
+        align-items: center;
+    
+    }
+  a {
+    text-decoration: none;
+    color: black;
+   
+   }
+    .filter{
+        text-align: center;
+         margin-right: 2rem;
+         margin-top: 2rem;
+         opacity: 0.7;
+    }
+    .filter:hover{
+        opacity: 1;
+        cursor: pointer;
+    }
+    .filter p{
+        font-size: 0.9rem;
+    }
+    .tax-info{
+        display: none;
+    }
+    .tax-toggle{
+        border: 1px solid black;
+        border-radius: 1rem;
+        height: 3.5rem;
+        padding: 1rem;
+        margin-top: 1rem;
+        margin-left: 5rem;
+    }
+ 
+  @media(max-width:768px){
+    #filters{
+      margin-top: 20rem;
+    }
+  }
+
+</style>
+
+<div id="filters">
+    <a href="/listings/search/trending" >
+        <div class="filter">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <p>Trending</p>
+    </div>
+   <a href="/listings/search/Rooms" >
+    <div class="filter">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Rooms</p>
+    </div>
+    </a>
+     <a href="/listings/search/IconicCities" >
+    <div class="filter">
+        
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic cities</p>
+    </div>
+    </a>
+     <a href="/listings/search/Mountain" >
+    <div class="filter">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>Mountain</p>
+    </div>
+</a>
+<a href="/listings/search/Castles">
+    <div class="filter">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>Castles</p>
+    </div>
+    </a>
+    <a href="/listings/search/AmazingPool">
+    <div class="filter">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        <p>Amazing Pool</p>
+    </div>
+    </a>
+    <a href="/listings/search/AmazingPool">
+    <div class="filter">
+        <div><i class="fa-solid fa-campground"></i></div>
+        <p>Camping</p>
+    </div>
+    </a>
+
+    <a href="/listings/search/Farms">
+    <div class="filter">
+        <div><i class="fa-solid fa-cow"></i></div>
+        <p>Farms</p>
+    </div>
+    </a>
+
+    <a href="/listings/search/Arctic">
+    <div class="filter">
+        <div><i class="fa-solid fa-snowflake"></i></div>
+        <p>Arctic</p>
+</div>
+</a>
+
+<a href="/listings/search/Deserts">
+ <div class="filter">
+        <div><i class="fa-solid fa-stroopwafel"></i></div>
+        <p>Deserts</p>
+        </div>
+        </a>
+
+<div class="tax-toggle">
+     <div class="form-check-reverse form-switch">
+  <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+  <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+</div>
+</div>
+
+        </div>
+    <div class="row row-cols-lg-3 row-cols-md-2 mt-3 row-cols-sm-1 mt-3 ">
+ <% for(listing of allListings){%>
+<a href="/listings/<%= listing._id %> " class="listing-link">
+  <div class="card listing-card ">
+  <img src="<%= listing.image.url%>" class="card-img-top" alt="image" style="height:20rem; border-radius:1rem;">
+  <div class="card-img-overlay"></div>
+  <div class="card-body">
+   
+    <p class="card-text">
+     <b> <%= listing.title %></b> <br>
+         &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %>/night
+        <i class="tax-info">&nbsp; +18% GST  </i>
+    </p>
+   
+  </div>
+</div>
+
+</a>
+     <% }%>
+
+    </div>
+    <!-- for taxes -->
+    <script>
+ let taxSwitch = document.getElementById("switchCheckDefault");
+ taxSwitch.addEventListener("click",()=>{
+        let taxInfo = document.getElementsByClassName("tax-info")
+   for(info of taxInfo){
+    if(info.style.display != "inline") {
+    info.style.display = "inline";
+   }
+   else{
+    info.style.display = "none";
+   }
+}
+
+ })
+    </script>
+
+
+
+    <!-- chatbot -->
+<body>
+  
+
+     <div class="chat-widget">
+        <div class="chat-bubble" onclick="toggleChat()">
+            <svg viewBox="0 0 24 24">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+            </svg>
+        </div>
+
+        <div class="chat-window " id="chatWindow">
+            <div class="chat-header">
+                <h3>🏡 Wanderlust Assistant</h3>
+                <button class="close-chat" onclick="toggleChat()">×</button>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-bubble">
+                        👋 Hi! I'm your Wanderlust assistant. I can help you find the perfect property for your trip!
+                        <div class="quick-actions">
+                            <button class="quick-action" onclick="sendQuickMessage('Find properties')">Find Properties</button>
+                            <button class="quick-action" onclick="sendQuickMessage('How to book?')">How to Book</button>
+                            <button class="quick-action" onclick="sendQuickMessage('Pricing info?')">Pricing</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <textarea 
+                    class="chat-input" 
+                    id="chatInput" 
+                    placeholder="Ask about properties, booking, or anything else..."
+                    rows="1"
+                    onkeydown="handleKeyDown(event)"
+                ></textarea>
+                <button class="send-button" onclick="sendMessage()">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="./js/chatbot.js"></script>
+    </body>
+
+      
+
+    
