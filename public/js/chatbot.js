@@ -118,16 +118,16 @@
         });
 
         // Optional: AI API Integration
-        async function callOpenAI(message) {
+        async function gemini(message) {
             try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                const response = await fetch('AIzaSyAWScxpOxeqaddzKkgjDdXvfCSuKl550DU', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer YOUR_OPENAI_API_KEY'
                     },
                     body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
+                        model: 'gemini-2.5-flash',
                         messages: [
                             {
                                 role: 'system',
