@@ -1,5 +1,5 @@
 {
-  "engines":{
+  "engines": {
     "node": "22.14.0"
   },
   "name": "wanderlust",
@@ -8,11 +8,12 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node app.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/genai": "^1.14.0",
     "@mapbox/mapbox-sdk": "^0.16.1",
     "cloudinary": "^2.7.0",
     "connect-flash": "^0.1.1",
