@@ -1,5 +1,3 @@
-     import { GoogleGenAI } from '@google/genai';
-  
   let chatOpen = false;
 
         // Rental-specific responses
@@ -120,43 +118,38 @@
         });
 
         // Optional: AI API Integration
-    
+        async function callOpenAI(message) {
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer YOUR_OPENAI_API_KEY'
+                    },
+                    body: JSON.stringify({
+                        model: 'gpt-3.5-turbo',
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'You are a helpful assistant for Wanderlust, a vacation rental platform. Help users find properties, understand booking, and answer travel questions. Keep responses concise and friendly.'
+                            },
+                            {
+                                role: 'user',
+                                content: message
+                            }
+                        ],
+                        max_tokens: 150,
+                        temperature: 0.7
+                    })
+                });
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,  // Set your API key via env variables
-});
-
-async function gemini(message) {
-  try {
-    const contents = [
-      {
-        role: 'system',
-        parts: [
-          {
-            text: 'You are a helpful assistant for Wanderlust, a vacation rental platform. Help users find properties, understand booking, and answer travel questions. Keep responses concise and friendly.'
-          }
-        ]
-      },
-      {
-        role: 'user',
-        parts: [{ text: message }]
-      }
-    ];
-
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-pro',
-      contents: contents,
-      config: {
-        // Optional: include tools or function calling here if needed
-      }
-    });
-
-    return response.candidates[0].content.parts[0].text;
-  } catch (error) {
-    console.error('Gemini API Error:', error);
-    return "I'm having trouble connecting right now. Please try again or contact support!";
-  }
-}
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                console.error('AI API Error:', error);
+                return "I'm having trouble connecting right now. Please try again or contact support!";
+            }
+        }
 
         // To use AI instead of predefined responses, replace generateResponse with:
         // async function generateResponse(message) {
