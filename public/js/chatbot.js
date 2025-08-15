@@ -120,7 +120,7 @@
         // Optional: AI API Integration
         async function callOpenAI(message) {
             try {
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                const response = await fetch(process.env.CHATBOT_API_KEY, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
